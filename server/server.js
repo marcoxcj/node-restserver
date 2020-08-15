@@ -1,15 +1,15 @@
 require('./config/config');
 
 const express = require('express');
+const mongoose = require('mongoose');
 const app = express();
 const bodyParser = require('body-parser');
 
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }));
+//app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
-app.use(bodyParser.json());
-
+//app.use(bodyParser.json());
 
 app.get('/usuario', function(req, res) {
     res.json('get Usuario');
@@ -42,6 +42,13 @@ app.put('/usuario/:id', function(req, res) {
 
 app.delete('/usuario', function(req, res) {
     res.json('delete Usuario');
+});
+
+mongoose.connect('mongodb+srv://marcoxcj:123@cluster0-ofofh.mongodb.net/test?retryWrites=true&w=majority', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}, (err, res) => {
+    if (err) {}
 });
 
 app.listen(process.env.PORT, () => {
