@@ -3,52 +3,26 @@ require('./config/config');
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
-const bodyParser = require('body-parser');
+const usuario = require('./routes/usuario');
 
 // parse application/x-www-form-urlencoded
-//app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 // parse application/json
 //app.use(bodyParser.json());
 
-app.get('/usuario', function(req, res) {
-    res.json('get Usuario');
-});
+app.use(usuario);
 
-app.post('/usuario', function(req, res) {
-
-    let body = req.body;
-
-    if (body.nombre === undefined) {
-        res.status(400).json({
-            ok: false,
-            mensaje: "El nombre es necesario"
-        });
-    } else {
-        res.json({
-            persona: body
-        });
-    }
-
-
-});
-
-app.put('/usuario/:id', function(req, res) {
-    let id = req.params.id;
-    res.json({
-        id
-    });
-});
-
-app.delete('/usuario', function(req, res) {
-    res.json('delete Usuario');
-});
-
-mongoose.connect('mongodb+srv://marcoxcj:123@cluster0-ofofh.mongodb.net/test?retryWrites=true&w=majority', {
+let mongoDB = process.env.URLDB;
+mongoose.connect(mongoDB, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
-}, (err, res) => {
-    if (err) {}
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+    useCreateIndex: true
+}, (err) => {
+    if (err) throw err;
+    console.log('base de datos ok');
 });
 
 app.listen(process.env.PORT, () => {
