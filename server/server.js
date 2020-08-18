@@ -3,7 +3,7 @@ require('./config/config');
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
-const usuario = require('./routes/usuario');
+const index = require('./routes/index');
 
 // parse application/x-www-form-urlencoded
 app.use(express.json());
@@ -12,7 +12,8 @@ app.use(express.urlencoded({ extended: false }));
 // parse application/json
 //app.use(bodyParser.json());
 
-app.use(usuario);
+//Configuracion global de las rutas
+app.use(index);
 
 let mongoDB = process.env.URLDB;
 mongoose.connect(mongoDB, {
