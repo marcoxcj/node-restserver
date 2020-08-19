@@ -4,6 +4,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
 const index = require('./routes/index');
+const path = require('path');
 
 // parse application/x-www-form-urlencoded
 app.use(express.json());
@@ -14,6 +15,8 @@ app.use(express.urlencoded({ extended: false }));
 
 //Configuracion global de las rutas
 app.use(index);
+
+app.use(express.static(path.resolve(__dirname, "public")));
 
 let mongoDB = process.env.URLDB;
 mongoose.connect(mongoDB, {
