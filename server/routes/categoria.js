@@ -9,8 +9,8 @@ const Categoria = require("../models/categoria");
 //mostrar todas las categorías
 app.get('/categoria', verificaToken, (req, res) => {
     Categoria.find({})
-        .sort('descripcion')
-        .populate('usuario', 'nombre email')
+        .sort('descripcion') // Ordena los resultados por la descripción
+        .populate('usuario', 'nombre email') //Busca información de otros objectID de MongoDB, Se pueden traer los campos que necesite
         .exec((err, categorias) => {
             if (err) {
                 return res.status(500).json({

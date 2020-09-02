@@ -15,8 +15,8 @@ app.get('/producto', verificaToken, (req, res) => {
     limite = Number(limite);
 
     Producto.find({ disponible: true })
-        .skip(desde)
-        .limit(limite)
+        .skip(desde) //para saltar las paginas
+        .limit(limite) //para limitar los resultados que se mostrarán
         .populate('usuario', 'nombre email')
         .populate('categoria', 'descripcion')
         .exec((err, productos) => {
@@ -72,7 +72,7 @@ app.get('/producto/buscar/:termino', verificaToken, (req, res) => {
 
     let termino = req.params.termino;
 
-    let regex = new RegExp(termino, 'i');
+    let regex = new RegExp(termino, 'i'); //incensible a mayusculas y minusculas
 
     Producto.find({ nombre: regex })
         .populate('categoria', 'nombre')
